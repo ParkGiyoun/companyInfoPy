@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 def start(corp):
-    browser = webdriver.Chrome("CorpWithGUI\chromedriver.exe")
+    browser = webdriver.Chrome("CorpWithGUI\Process\chromedriver.exe")
 
     # 주소 get
     browser.get("http://dart.fss.or.kr/")
