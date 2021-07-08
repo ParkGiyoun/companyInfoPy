@@ -1,7 +1,7 @@
 from tkinter import *
 from Component.Input import InputText
 from Component.label import label
-from get_corp_num import get_corp_num
+from Process.get_corp_num import start
 
 # 화면 설정
 root = Tk()
@@ -16,18 +16,20 @@ inputCorp = InputText(root, 0, 1)
 
 # 결과 창
 def return_result(result_Text):
-    label(root, result_Text, 1, 2)
+    # 법인등록번호
+    label(root, "법인등록번호", 1, 0)
+    label(root, result_Text, 1, 1)
 
 
 # 검색 버튼
 def btncmd():
-    print(inputCorp.get())
+    # corp_num : 공공데이터 API 사용을 위한 법인등록번호
+    corp_num = start(inputCorp.get())
 
-    return_result(inputCorp.get())
-    corp_num = get_corp_num(inputCorp.get())
-    corp_num.start()
+    num_for_print = corp_num[:6]+"-"+corp_num[6:]
+    return_result(num_for_print)
 
-    inputCorp.delete("1.0", END)
+    inputCorp.delete(END)
 
 
 SearchBtn = Button(root, text="검색", command=btncmd)
