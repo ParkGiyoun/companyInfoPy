@@ -11,7 +11,7 @@ Industrial & Management Engineering
 import requests as rq
 import json
 import xmltodict
-# 서비스키는 apiKey.py를 통해 관리
+# 서비스키는 apiKey.py를 통해 관리 (이 파이썬 파일과 같은 경로에 위치 해야한다.)
 from Process.DataApi.apiKey import serviceKey
 
 ServiceKey = serviceKey

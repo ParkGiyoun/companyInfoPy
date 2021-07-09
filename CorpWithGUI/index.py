@@ -48,9 +48,25 @@ inputCorp = InputText(root, 0, 1)
 
 # 결과 창
 def return_result(result_Text):
-    # 법인등록번호
-    label(root, "법인등록번호", 1, 0)
-    label(root, result_Text, 1, 1)
+    # Title Label                                   level 1
+    label(root, "검색결과", 1, 0, 1, 4, py=10)
+
+    # 법인등록번호                                    level 2
+    label(root, "법인등록번호", 2, 0, 1, 3)
+    label(root, result_Text, 2, 3)
+
+    # 기업명                                         level 3
+    label(root, "기업명", 3, 0, 1, 3)
+    label(root, DFF[0][0][1][-1], 3, 3)
+
+    # SubTitle Label                                level 4
+    label(root, "기본재무정보 (손익계산서, 재무상태표)", 4, 0, 1, 4, py=10)
+
+    # 기본 회계 정보                                  level 5~
+    for i in range(len(DFF[0])-1):
+        n = 5 + i
+        label(root, DFF[0][i+1][0], n, 0, 1, 3)
+        label(root, DFF[0][i+1][1][-1], n, 3)
 
 
 # 검색 버튼
@@ -64,7 +80,7 @@ def btncmd():
     num_for_print = corp_num[:6]+"-"+corp_num[6:]
     return_result(num_for_print)
 
-    inputCorp.delete(END)
+    inputCorp.delete('0', END)
 
 
 SearchBtn = Button(root, text="검색", command=btncmd)
