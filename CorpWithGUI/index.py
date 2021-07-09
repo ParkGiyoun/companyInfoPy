@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 from Component.Input import InputText
 from Component.label import label
 from Process.get_corp_num import start
@@ -11,10 +12,10 @@ root.title("기업 회계정보 Sys")
 # DATA variable
 _BasicData = [
     ("기업명", []),
-    ("회계연도", []),
-    ("매출액", []),
     ("영업이익", []),
+    ("당기순이익", []),
     ("법인세차감전순이익", []),
+    ("매출액", []),
     ("당기순이익", []),
     ("자산총계", []),
     ("유동자산", []),
@@ -48,25 +49,54 @@ inputCorp = InputText(root, 0, 1)
 
 # 결과 창
 def return_result(result_Text):
-    # Title Label                                   level 1
-    label(root, "검색결과", 1, 0, 1, 4, py=10)
+    frame1 = Frame(root)
+    frame1.grid(row=1, column=0, rowspan=1, columnspan=4)
+    # Separator                                     ------------
+    separator = ttk.Separator(frame1, orient='horizontal')
+    separator.grid(row=0, column=0, sticky="WE")
 
-    # 법인등록번호                                    level 2
-    label(root, "법인등록번호", 2, 0, 1, 3)
-    label(root, result_Text, 2, 3)
+    f_1_1 = Frame(frame1)
+    f_1_1.grid(row=1, column=0)
 
-    # 기업명                                         level 3
-    label(root, "기업명", 3, 0, 1, 3)
-    label(root, DFF[0][0][1][-1], 3, 3)
+    # Title Label                                   level 1-0
+    label(f_1_1, "검색결과", 0, 0, 1, 2, py=5)
 
-    # SubTitle Label                                level 4
-    label(root, "기본재무정보 (손익계산서, 재무상태표)", 4, 0, 1, 4, py=10)
+    # Separator                                     ------------
+    separator = ttk.Separator(frame1, orient='horizontal')
+    separator.grid(row=2, column=0, sticky="WE")
 
-    # 기본 회계 정보                                  level 5~
+    f_1_2 = Frame(frame1)
+    f_1_2.grid(row=3, column=0)
+
+    # 법인등록번호                                    level 2-0
+    label(f_1_2, "법인등록번호", 1, 0)
+    label(f_1_2, result_Text, 1, 1)
+
+    # 기업명                                         level 2-1
+    label(f_1_2, "기업명", 2, 0)
+    label(f_1_2, DFF[0][0][1][-1], 2, 1)
+
+    # Separator                                     ------------
+    separator = ttk.Separator(frame1, orient='horizontal')
+    separator.grid(row=4, column=0, sticky="WE")
+
+    f_1_3 = Frame(frame1)
+    f_1_3.grid(row=5, column=0)
+
+    # SubTitle Label                                level 3-0
+    label(f_1_3, "기본재무정보 (손익계산서, 재무상태표)", 0, 0, 1, 2, py=5)
+
+    # Separator                                     ------------
+    separator = ttk.Separator(frame1, orient='horizontal')
+    separator.grid(row=6, column=0, sticky="WE")
+
+    f_1_4 = Frame(frame1)
+    f_1_4.grid(row=7, column=0)
+
+    # 기본 회계 정보                                  level 4-0 ~
     for i in range(len(DFF[0])-1):
-        n = 5 + i
-        label(root, DFF[0][i+1][0], n, 0, 1, 3)
-        label(root, DFF[0][i+1][1][-1], n, 3)
+        label(f_1_4, DFF[0][i+1][0], i, 0)
+        label(f_1_4, DFF[0][i+1][1][-1], i, 1)
 
 
 # 검색 버튼
