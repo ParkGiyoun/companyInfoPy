@@ -121,3 +121,22 @@ def DataMain(CorpNum, Corp, DFF):
 
     DFF = DataFrameModule(DFF, Assets, Rates)
     return DFF
+
+
+# 영미식 단위로 끊어주는 함수
+def money(mon):
+    a = int(mon)
+    print(a)
+    result = str(a)
+    count = 0
+    while (a > 0):
+        a = a//1000
+        if(a != 0):
+            count += 1
+    for i in range(count):
+        info = -3*count
+        index = info+i*3
+        result = result[:index] + ',' + result[index:]
+
+    return result
+# O(n)

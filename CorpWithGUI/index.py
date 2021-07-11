@@ -3,7 +3,7 @@ from tkinter import ttk
 from Component.Input import InputText
 from Component.label import label
 from Process.get_corp_num import start
-from Process.DataApi.corpData import DataMain
+from Process.DataApi.corpData import DataMain, money
 
 # 화면 설정
 root = Tk()
@@ -41,16 +41,20 @@ _RateData = [
 ]
 DFF = [_BasicData, _RateData]
 
+
 # ==================================================
+# ==== MAIN ====
 # 기업명 입력
-inputLabel = label(root, "기업명", 0, 0)
-inputCorp = InputText(root, 0, 1)
+mainFrame = Frame(root)
+mainFrame.grid(row=0, column=0, padx=30, pady=10)
+inputLabel = label(mainFrame, "기업명", 0, 0, px=2, py=1)
+inputCorp = InputText(mainFrame, 0, 1)
 
 
 # 결과 창
 def return_result(result_Text):
-    frame1 = Frame(root)
-    frame1.grid(row=1, column=0, rowspan=1, columnspan=4)
+    frame1 = Frame(mainFrame)
+    frame1.grid(row=1, column=0, rowspan=1, columnspan=4, padx=10, pady=8)
     # Separator                                     ------------
     separator = ttk.Separator(frame1, orient='horizontal')
     separator.grid(row=0, column=0, sticky="WE")
@@ -59,7 +63,7 @@ def return_result(result_Text):
     f_1_1.grid(row=1, column=0)
 
     # Title Label                                   level 1-0
-    label(f_1_1, "검색결과", 0, 0, 1, 2, py=5)
+    label(f_1_1, "검색결과", 0, 0, 1, 2, py=5, bn="bold", ft=11)
 
     # Separator                                     ------------
     separator = ttk.Separator(frame1, orient='horizontal')
@@ -69,12 +73,12 @@ def return_result(result_Text):
     f_1_2.grid(row=3, column=0)
 
     # 법인등록번호                                    level 2-0
-    label(f_1_2, "법인등록번호", 1, 0)
-    label(f_1_2, result_Text, 1, 1)
+    label(f_1_2, "법인등록번호", 1, 0, bn="bold", py=3)
+    label(f_1_2, result_Text, 1, 1, py=3)
 
     # 기업명                                         level 2-1
-    label(f_1_2, "기업명", 2, 0)
-    label(f_1_2, DFF[0][0][1][-1], 2, 1)
+    label(f_1_2, "기업명", 2, 0, bn="bold", py=3)
+    label(f_1_2, DFF[0][0][1][-1], 2, 1, py=3)
 
     # Separator                                     ------------
     separator = ttk.Separator(frame1, orient='horizontal')
@@ -84,7 +88,7 @@ def return_result(result_Text):
     f_1_3.grid(row=5, column=0)
 
     # SubTitle Label                                level 3-0
-    label(f_1_3, "기본재무정보 (손익계산서, 재무상태표)", 0, 0, 1, 2, py=5)
+    label(f_1_3, "기본재무정보 (손익계산서, 재무상태표)", 0, 0, 1, 2, py=5, bn='bold', ft=11)
 
     # Separator                                     ------------
     separator = ttk.Separator(frame1, orient='horizontal')
@@ -95,8 +99,8 @@ def return_result(result_Text):
 
     # 기본 회계 정보                                  level 4-0 ~
     for i in range(len(DFF[0])-1):
-        label(f_1_4, DFF[0][i+1][0], i, 0)
-        label(f_1_4, DFF[0][i+1][1][-1], i, 1)
+        label(f_1_4, DFF[0][i+1][0], i, 0, bn="bold", py=3)
+        label(f_1_4, money(DFF[0][i+1][1][-1]), i, 1, py=3)
 
 
 # 검색 버튼
@@ -105,16 +109,17 @@ def btncmd():
     corp_num = start(inputCorp.get())
 
     # Data Frame Module Control
-    DataMain(corp_num, inputCorp.get(), DFF)
+    DataMain(corp_num[0], corp_num[1], DFF)
 
-    num_for_print = corp_num[:6]+"-"+corp_num[6:]
+    num_for_print = corp_num[0][:6]+"-"+corp_num[0][6:]
     return_result(num_for_print)
 
     inputCorp.delete('0', END)
 
 
-SearchBtn = Button(root, text="검색", command=btncmd)
-SearchBtn.grid(row=0, column=2)
+# ==== MAIN ====
+SearchBtn = Button(mainFrame, text="검색", command=btncmd)
+SearchBtn.grid(row=0, column=2, sticky="WE")
 
 # ==================================================
 # Main loop

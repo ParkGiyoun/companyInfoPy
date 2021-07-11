@@ -24,12 +24,18 @@ def start(corp):
     searchElem.send_keys(corp)  # 여기선 위의 import 필요 없음.
     searchElem.send_keys(Keys.ENTER)
 
+    # 2021-07-11 ----
+    # 기업 링크 Xpath
+    linkXpath = "/html/body/div[1]/div[2]/div[2]/div[2]/div[3]/div[1]/table/tbody/tr[1]/td[2]/span/a"
+    # ---------------
+
     # 기업 리스트 조회까지 대기
     try:
         # 기업 링크 클릭
-        corpLink = WebDriverWait(browser, 10).until(
-            EC.presence_of_all_elements_located((By.LINK_TEXT, corp)))
-        corpLink[0].click()
+        corpLink = WebDriverWait(browser, 2).until(
+            EC.presence_of_element_located((By.XPATH, linkXpath)))
+        resultCorp = corpLink.text
+        corpLink.click()
     finally:
         print("공시 System....")
 
@@ -48,5 +54,4 @@ def start(corp):
 
     # 사용할 법인 등록 번호
     CorpNum = CorpNum[:6]+CorpNum[7:]
-    print(CorpNum)
-    return CorpNum
+    return CorpNum, resultCorp
