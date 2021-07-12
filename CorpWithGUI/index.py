@@ -7,6 +7,7 @@ from Process.DataApi.corpData import DataMain, money
 
 # 화면 설정
 root = Tk()
+root.geometry("1366x768")
 root.title("기업 회계정보 Sys")
 
 # DATA variable
@@ -46,15 +47,18 @@ DFF = [_BasicData, _RateData]
 # ==== MAIN ====
 # 기업명 입력
 mainFrame = Frame(root)
-mainFrame.grid(row=0, column=0, padx=30, pady=10)
+mainFrame.grid(row=0, column=0, padx=30, pady=10, sticky="WE")
 inputLabel = label(mainFrame, "기업명", 0, 0, px=2, py=1)
 inputCorp = InputText(mainFrame, 0, 1)
 
 
 # 결과 창
 def return_result(result_Text):
+    # FRAME 1에 해당하는 부분
+    # ========================
     frame1 = Frame(mainFrame)
-    frame1.grid(row=1, column=0, rowspan=1, columnspan=4, padx=10, pady=8)
+    frame1.grid(row=1, column=0, rowspan=1, columnspan=4,
+                padx=10, pady=8, sticky="NS")
     # Separator                                     ------------
     separator = ttk.Separator(frame1, orient='horizontal')
     separator.grid(row=0, column=0, sticky="WE")
@@ -73,12 +77,12 @@ def return_result(result_Text):
     f_1_2.grid(row=3, column=0)
 
     # 법인등록번호                                    level 2-0
-    label(f_1_2, "법인등록번호", 1, 0, bn="bold", py=3)
-    label(f_1_2, result_Text, 1, 1, py=3)
+    label(f_1_2, "법인등록번호", 0, 0, bn="bold", py=3)
+    label(f_1_2, result_Text, 0, 1, py=3)
 
     # 기업명                                         level 2-1
-    label(f_1_2, "기업명", 2, 0, bn="bold", py=3)
-    label(f_1_2, DFF[0][0][1][-1], 2, 1, py=3)
+    label(f_1_2, "기업명", 1, 0, bn="bold", py=3)
+    label(f_1_2, DFF[0][0][1][-1], 1, 1, py=3)
 
     # Separator                                     ------------
     separator = ttk.Separator(frame1, orient='horizontal')
@@ -101,6 +105,37 @@ def return_result(result_Text):
     for i in range(len(DFF[0])-1):
         label(f_1_4, DFF[0][i+1][0], i, 0, bn="bold", py=3)
         label(f_1_4, money(DFF[0][i+1][1][-1]), i, 1, py=3)
+
+    # ========================
+    # Separator                                     ------------
+    separator = ttk.Separator(mainFrame, orient='vertical')
+    separator.grid(row=1, column=4, sticky="NS")
+
+    # FRAME 2
+    frame2 = Frame(mainFrame)
+    frame2.grid(row=1, column=5, padx=30, pady=10, sticky="NS")
+
+    # Separator                                     ------------
+    separator = ttk.Separator(frame2, orient='horizontal')
+    separator.grid(row=1, column=0, sticky="WE")
+
+    f_2_1 = Frame(frame2)
+    f_2_1.grid(row=2, column=0)
+
+    # 비율 회계 TITLE
+    label(f_2_1, "비율재무제표", 0, 0, 1, 2, py=5, bn="bold", ft=11)
+
+    # Separator                                     ------------
+    separator = ttk.Separator(frame2, orient='horizontal')
+    separator.grid(row=3, column=0, sticky="WE")
+
+    f_2_2 = Frame(frame2)
+    f_2_2.grid(row=4, column=0)
+
+    # 비율 회계 정보
+    for i in range(len(DFF[1])-1):
+        label(f_2_2, DFF[1][i+1][0], i, 0, bn="bold", py=3)
+        label(f_2_2, DFF[1][i+1][1][-1], i, 1, py=3)
 
 
 # 검색 버튼
